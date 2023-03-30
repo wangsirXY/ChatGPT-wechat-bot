@@ -5,9 +5,9 @@
   */
 export default {
   // 云函数请求地址
-  API_BASE_URL: "",
+  API_BASE_URL: "https://xxxxxxxx.com",
   // 填入你的OPENAI_API_KEY
-  OPENAI_API_KEY: '',
+  OPENAI_API_KEY: 'sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
   // 设置获取消息的重试次数
   retryTimes: 3,
   // 在群组中设置唤醒微信机器人的关键词
