@@ -6,13 +6,25 @@
   "scripts": {
     "dev": "node --loader ts-node/esm --inspect ./src/index.ts",
     "build": "tsc",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky install"
   },
   "author": "GuAn",
   "license": "ISC",
-  "devDependencies": {},
+  "devDependencies": {
+    "@commitlint/cli": "12.1.4",
+    "@commitlint/config-conventional": "12.1.4",
+    "commitizen": "4.2.4",
+    "cz-customizable": "6.3.0",
+    "husky": "7.0.1"
+  },
   "dependencies": {
     "ts-node": "^10.9.1",
     "typescript": "^5.0.2"
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-customizable"
+    }
   }
 }
