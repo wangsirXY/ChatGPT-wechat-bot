@@ -1,0 +1,4 @@
+#!/bin/sh
+# . "$(dirname "")/_/husky.sh"
+
+# npx --no-install commitlint --edit

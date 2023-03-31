@@ -27,12 +27,90 @@
     "wechaty-puppet-wechat": "^1.18.4"
   },
   "devDependencies": {
+    "@commitlint/cli": "^12.1.4",
+    "@commitlint/config-conventional": "^12.1.4",
     "@types/node": "^18.11.11",
     "@types/qrcode-terminal": "^0.12.0",
+    "commitizen": "^4.2.4",
+    "cz-conventional-changelog": "^3.3.0",
+    "cz-customizable": "6.3.0",
+    "husky": "7.0.1",
     "ts-node": "^10.9.1",
     "typescript": "^4.8.2"
   },
   "volta": {
     "node": "18.12.1"
+  },
+  "config": {
+    "husky": {
+      "pre-commit": ""
+    },
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog",
+      "maxHeaderWidth": 72,
+      "maxLineWidth": 72,
+      "defaultScope": "请输入修改范围(可选):",
+      "defaultSubject": "请简要描述提交(必填):",
+      "defaultBody": "请输入详细描述(可选):",
+      "defaultIssues": "请输入要关闭的issue(可选):",
+      "types": {
+        "feat": {
+          "description": "一个新的特性",
+          "title": "feat"
+        },
+        "fix": {
+          "description": "修复一个Bug",
+          "title": "fix"
+        },
+        "docs": {
+          "description": "文档变更",
+          "title": "docs"
+        },
+        "style": {
+          "description": "代码格式(不影响代码运行的变动)",
+          "title": "style"
+        },
+        "refactor": {
+          "description": "代码重构，注意和特性、修复区分开",
+          "title": "refactor"
+        },
+        "perf": {
+          "description": "性能优化",
+          "title": "perf"
+        },
+        "test": {
+          "description": "增加测试",
+          "title": "test"
+        },
+        "ci": {
+          "description": "修改项目继续集成流程",
+          "title": "ci"
+        },
+        "chore": {
+          "description": "构建过程或辅助工具的变动(包括但不限于文档、代码生成等)",
+          "title": "chore"
+        },
+        "improvement": {
+          "description": "用于对当前实现进行改进而没有添加新功能或修复错误的提交",
+          "title": "improvement"
+        },
+        "merge": {
+          "description": "仅进行分支合并",
+          "title": "merge"
+        },
+        "deps": {
+          "description": "升级依赖",
+          "title": "deps"
+        },
+        "revert": {
+          "description": "回滚到上一个版本",
+          "title": "revert"
+        },
+        "build": {
+          "description": "打包(修改项目构建系统配置)",
+          "title": "build"
+        }
+      }
+    }
   }
 }
