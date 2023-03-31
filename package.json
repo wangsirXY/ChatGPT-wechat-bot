@@ -3,32 +3,36 @@
   "version": "1.0.0",
   "description": "基于ChatGPT的微信自动回复机器人。",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "dev": "node --loader ts-node/esm --inspect ./src/index.ts",
     "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepare": "husky install"
   },
+  "keywords": [
+    "chatgpt",
+    "wechat",
+    "wechaty",
+    "微信机器人",
+    "微信助手"
+  ],
   "author": "GuAn",
   "license": "ISC",
   "dependencies": {
+    "@commitlint/load": "^17.5.0",
+    "chatgpt": "^5.1.2",
     "qrcode-terminal": "^0.12.0",
-    "ts-node": "^10.9.1",
-    "typescript": "^5.0.2",
     "wechaty": "^1.20.2",
     "wechaty-puppet-wechat": "^1.18.4"
   },
   "devDependencies": {
-    "@commitlint/cli": "12.1.4",
-    "@commitlint/config-conventional": "12.1.4",
+    "@types/node": "^18.11.11",
     "@types/qrcode-terminal": "^0.12.0",
-    "commitizen": "4.2.4",
-    "cz-customizable": "6.3.0",
-    "husky": "7.0.1"
+    "ts-node": "^10.9.1",
+    "typescript": "^4.8.2"
   },
-  "config": {
-    "commitizen": {
-      "path": "node_modules/cz-customizable"
-    }
+  "volta": {
+    "node": "18.12.1"
   }
 }

@@ -4,8 +4,9 @@
   * @time 2023-03-30 10:13:06
   */
 import { WechatyBuilder } from "wechaty";
-import { onFriendShip, onLogin, onLogout, onMessage, onScan } from "./wx";
-import config from "./config";
+import { onFriendShip, onLogin, onLogout, onMessage, onScan } from "./wx.js";
+import config from "./config.js";
+import { initChatGPT } from "./chatgpt.js";
 
 // 微信实例
 export let bot: any = {};
@@ -17,6 +18,10 @@ initProject();
 /** 初始化项目 */
 async function initProject() {
   try {
+    // 初始化ChatGPT
+    await initChatGPT()
+
+    // 创建微信实例
     bot = WechatyBuilder.build({
       name: "wechat-bot",
       puppet: 'wechaty-puppet-wechat', // 如果有token，记得更换对应的puppet

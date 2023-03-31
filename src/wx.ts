@@ -4,8 +4,9 @@
   * @time 2023-03-30 10:44:56
   */
 import qrcodeTerminal from "qrcode-terminal";
-import config from "./config";
-import { bot, startTime } from "./index";
+import config from "./config.js";
+import { bot, startTime } from "./index.js";
+import { replyMessage } from "./chatgpt.js";
 
 /**
  * 生成微信登录二维码
@@ -78,6 +79,7 @@ export async function onMessage(msg: any) {
   const content = msg.text().trim();
   // 微信群聊信息
   const room = msg.room();
+
   /**
    * 联系人昵称
    *  - .alias() 获取这个联系人在群内的群昵称
@@ -85,7 +87,7 @@ export async function onMessage(msg: any) {
    */
   const alias = (await contact.alias()) || (await contact.name());
   // 消息类型
-  const isText = contact.type() === bot.Message.Type.Text;
+  const isText = msg.type() === bot.Message.Type.Text;
 
   // 当前消息是否为机器人发送
   if (msg.self()) return;
@@ -115,12 +117,12 @@ export async function onMessage(msg: any) {
         // 去除唤醒词后的群消息
         const groupContent = content.replace(pattern, "");
         // 调用回复消息方法
-        // replyMessage(room, groupContent);
+        replyMessage(room, groupContent, contact.name());
         return;
       }
       console.log(`Content is not within the scope of the customizition format.`);
     }
-  } else if (!room && isText) {
+  } else if (isText) {
     // 如果是微信私聊
     console.log("----------收到用户私聊消息----------");
     console.log(`talker: ${alias} content: ${content}`);
@@ -128,11 +130,11 @@ export async function onMessage(msg: any) {
     // 如果开启了自动回复
     if (config.autoReply) {
       // 如果消息以唤醒词开头
-      if (content.startsSwitch(config.privateKey)) {
+      if (content.startsWith(config.privateKey)) {
         // 去除唤醒词的消息内容
         let privateContent = config.privateKey !== "" ? content.subString(config.privateKey.length).trim() : content;
         // 调用回复消息方法
-        // replyMessage(contact, privateContent);
+        replyMessage(contact, privateContent);
       }
     }
   } else {
