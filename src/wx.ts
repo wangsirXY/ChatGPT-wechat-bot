@@ -132,7 +132,7 @@ export async function onMessage(msg: any) {
       // 如果消息以唤醒词开头
       if (content.startsWith(config.privateKey)) {
         // 去除唤醒词的消息内容
-        let privateContent = config.privateKey !== "" ? content.subString(config.privateKey.length).trim() : content;
+        let privateContent = config.privateKey !== "" ? content.substring(config.privateKey.length).trim() : content;
         // 调用回复消息方法
         replyMessage(contact, privateContent);
       }
