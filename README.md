@@ -18,7 +18,7 @@
 
 ## 默认配置
 
-```json
+```js
 {
   // 填入你的OPENAI_API_KEY
   OPENAI_API_KEY: '',
