@@ -36,7 +36,7 @@ export function onLogin(nickname: any) {
   // 打印登录时间
   console.log(`Current time: ${new Date()}`);
   // 如果机器人设置自动回复，则打印提示
-  if (config.autoReply)
+  if (config.wx.autoReply)
     console.log(`Automatic robot chat mode has been activated.`);
 }
 
@@ -56,7 +56,7 @@ export async function onFriendShip(friendship: any) {
   // 判断是否为加好友请求
   if (friendship.type() === 2) {
     // 根据是否为自动通过好友验证的正则
-    if (config.friendShipRule.test(friendship.hello())) {
+    if (config.wx.friendShipRule.test(friendship.hello())) {
       await friendship.accept();
     }
   }
@@ -109,7 +109,7 @@ export async function onMessage(msg: any) {
     `);
 
     // 正则表达式；匹配是否有唤醒词
-    const pattern = RegExp(`^@${receiver.name()}\\s+${config.groupKey}[\\s]*`);
+    const pattern = RegExp(`^@${receiver.name()}\\s+${config.wx.groupKey}[\\s]*`);
     // 机器人是否在群里被@
     if (await msg.mentionSelf()) {
       // 匹配正则
@@ -128,11 +128,11 @@ export async function onMessage(msg: any) {
     console.log(`talker: ${alias} content: ${content}`);
 
     // 如果开启了自动回复
-    if (config.autoReply) {
+    if (config.wx.autoReply) {
       // 如果消息以唤醒词开头
-      if (content.startsWith(config.privateKey)) {
+      if (content.startsWith(config.wx.privateKey)) {
         // 去除唤醒词的消息内容
-        let privateContent = config.privateKey !== "" ? content.substring(config.privateKey.length).trim() : content;
+        let privateContent = config.wx.privateKey !== "" ? content.substring(config.wx.privateKey.length).trim() : content;
         // 调用回复消息方法
         replyMessage(contact, privateContent);
       }

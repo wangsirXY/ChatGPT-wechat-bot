@@ -16,8 +16,8 @@ let chatOption: any = {};
 /** 初始化 ChatGPT */
 export async function initChatGPT() {
   chatGPT = new ChatGPTAPI({
-    apiKey: config.OPENAI_API_KEY,
-    apiBaseUrl: config.API_BASE_URL,
+    apiKey: config.openai.OPENAI_API_KEY,
+    apiBaseUrl: config.openai.API_BASE_URL,
     completionParams: {
       model: 'gpt-3.5-turbo',
     },
@@ -64,7 +64,7 @@ export async function replyMessage(contact: any, content: string, nickname?: str
   try {
     // 如果用户发的是重置上下文的关键词
     if (
-      content.trim().toLocaleLowerCase() === config.resetKey.toLocaleLowerCase()
+      content.trim().toLocaleLowerCase() === config.wx.resetKey.toLocaleLowerCase()
     ) {
       // 重置上下文
       chatOption = {
@@ -78,14 +78,14 @@ export async function replyMessage(contact: any, content: string, nickname?: str
     const message = await retryRequest(
       // 获取ChatGPT回复的消息
       () => getChatGPTReply(content, contactId),
-      config.retryTimes,
+      config.wx.retryTimes,
       500
     );
 
     if (
       // 如果按照回复的格式进行回复
-      (contact.topic && contact?.topic() && config.groupReplyMode) ||
-      (!contact.topic && config.privateReplyMode)
+      (contact.topic && contact?.topic() && config.wx.groupReplyMode) ||
+      (!contact.topic && config.wx.privateReplyMode)
     ) {
       // 格式化回复内容为回复格式
       const result = content + `\n-----------\n@${nickname} ` + message;

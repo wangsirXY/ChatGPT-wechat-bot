@@ -38,7 +38,7 @@ async function initProject() {
       .on("message", onMessage)   // 收发消息
 
     // 判断好友验证正则是否存在
-    if (config.friendShipRule) {
+    if (config.wx.friendShipRule) {
       bot.on("friendship", onFriendShip);   // 好友申请消息
     }
 
