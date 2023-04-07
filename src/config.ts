@@ -4,6 +4,8 @@
   * @time 2023-03-30 10:12:29
   */
 export default {
+  // 是否停机维护
+  temporaryClosure: false,
   // 微信相关参数
   wx: {
     // 设置获取消息的重试次数

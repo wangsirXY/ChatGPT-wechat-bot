@@ -82,20 +82,8 @@ export async function replyMessage(contact: any, content: string, nickname?: str
       500
     );
 
-    if (
-      // 如果按照回复的格式进行回复
-      (contact.topic && contact?.topic() && config.wx.groupReplyMode) ||
-      (!contact.topic && config.wx.privateReplyMode)
-    ) {
-      // 格式化回复内容为回复格式
-      const result = content + `\n-----------\n@${nickname} ` + message;
-      // 返回格式化后的回复内容
-      await contact.say(result);
-      return;
-    } else {
-      // 返回原回复内容
-      await contact.say(message);
-    }
+    // 格式化消息回复内容
+    formatMessage(contact, content, message, nickname);
   } catch (e: any) {
     console.error(e);
     // 如果网络超时，则回复超时提示
@@ -105,5 +93,22 @@ export async function replyMessage(contact: any, content: string, nickname?: str
         '\n-----------\nERROR: Please try again, ChatGPT timed out for waiting response.'
       );
     }
+  }
+}
+
+/**
+ * 格式化信息
+ * @param contact 发送者信息
+ */
+async function formatMessage(contact: any, content: string, message: string, nickname?: string) {
+  if (
+    (contact.topic && contact?.topic() && config.wx.groupReplyMode) ||
+    (!contact.topic && config.wx.privateReplyMode)
+  ) {
+    // 格式化回复内容为回复格式
+    const result = content + `\n-----------\n@${nickname} ` + message;
+    await contact.say(result);
+  } else {
+    await contact.say(message);
   }
 }

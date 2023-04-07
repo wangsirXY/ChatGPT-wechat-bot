@@ -80,7 +80,6 @@ export async function onMessage(msg: any) {
   const content = msg.text().trim();
   // 微信群聊信息
   const room = msg.room();
-
   /**
    * 联系人昵称
    *  - .alias() 获取这个联系人在群内的群昵称
@@ -113,18 +112,16 @@ export async function onMessage(msg: any) {
     const pattern = RegExp(`^@${receiver.name()}\\s+${config.wx.groupKey}[\\s]*`);
     // 机器人是否在群里被@
     if (await msg.mentionSelf()) {
+      // 停机维护
+      if (config.temporaryClosure) return await room.say(`@${contact.name()} 停机维护中，请稍后再试···`);
+
       // 匹配正则
       if (pattern.test(content)) {
         // 去除唤醒词后的群消息
         const groupContent = content.replace(pattern, "");
 
-        // 执行htlp指令
-        if (groupContent.trim().toLocaleLowerCase() === "help".toLocaleLowerCase()) {
-          return await room.say(awakenHelp(contact.name()));
-        }
-
-        // 调用回复消息方法
-        replyMessage(room, groupContent, contact.name());
+        // 匹配指令
+        instruct(contact, groupContent, room);
         return;
       }
       console.log(`Content is not within the scope of the customizition format.`);
@@ -136,21 +133,36 @@ export async function onMessage(msg: any) {
 
     // 如果开启了自动回复
     if (config.wx.autoReply) {
+      // 停机维护
+      if (config.temporaryClosure) return await contact.say("停机维护中，请稍后再试···");
+
       // 如果消息以唤醒词开头
       if (content.startsWith(config.wx.privateKey)) {
-        // 去除唤醒词的消息内容
+        // 去除唤醒词后的消息内容
         let privateContent = config.wx.privateKey !== "" ? content.substring(config.wx.privateKey.length).trim() : content;
-
-        // 执行htlp指令
-        if (privateContent.trim().toLocaleLowerCase() === "help".toLocaleLowerCase()) {
-          return await contact.say(awakenHelp());
-        }
-
-        // 调用回复消息方法
-        replyMessage(contact, privateContent);
+        // 匹配指令
+        instruct(contact, privateContent);
       }
     }
   } else {
     console.log(`Content is not within the scope of the customizition format.`);
   }
+}
+
+
+/**
+ * 匹配指令
+ * @param contact 发送者信息
+ * @param content 消息内容
+ * @param room 群聊信息：如果是群聊，则传递群聊对象，私聊则不传
+ * @returns 
+ */
+async function instruct(contact: any, content: string, room?: any) {
+  // help指令
+  if (content.trim().toLocaleLowerCase() === "help".toLocaleLowerCase()) {
+    return room ? await room.say(awakenHelp(contact.name())) : await contact.say(awakenHelp());
+  }
+
+  // 调用回复消息方法
+  room ? replyMessage(room, content, contact.name()) : replyMessage(contact, content);
 }
