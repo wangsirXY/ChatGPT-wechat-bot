@@ -7,6 +7,7 @@ import qrcodeTerminal from "qrcode-terminal";
 import config from "./config.js";
 import { bot, startTime } from "./index.js";
 import { replyMessage } from "./chatgpt.js";
+import awakenHelp from "./utils/awakenHelp.js";
 
 /**
  * 生成微信登录二维码
@@ -116,6 +117,12 @@ export async function onMessage(msg: any) {
       if (pattern.test(content)) {
         // 去除唤醒词后的群消息
         const groupContent = content.replace(pattern, "");
+
+        // 执行htlp指令
+        if (groupContent.trim().toLocaleLowerCase() === "help".toLocaleLowerCase()) {
+          return await contact.say(awakenHelp(contact.name()));
+        }
+
         // 调用回复消息方法
         replyMessage(room, groupContent, contact.name());
         return;
@@ -133,6 +140,12 @@ export async function onMessage(msg: any) {
       if (content.startsWith(config.wx.privateKey)) {
         // 去除唤醒词的消息内容
         let privateContent = config.wx.privateKey !== "" ? content.substring(config.wx.privateKey.length).trim() : content;
+
+        // 执行htlp指令
+        if (privateContent.trim().toLocaleLowerCase() === "help".toLocaleLowerCase()) {
+          return await contact.say(awakenHelp(contact.name()));
+        }
+
         // 调用回复消息方法
         replyMessage(contact, privateContent);
       }
