@@ -3,9 +3,9 @@
   * @author GuAn
   * @time 2023-04-07 10:42:21
   */
-export default function (nickname: string) {
+export default function (nickname?: string) {
   return `
-    @${nickname} 我会为您提供以下帮助：\n
+    nickname${nickname ? `@${nickname} ` : ''}我会为您提供以下帮助：\n
     \n
     1. 发送私聊信息“小安 + 问题”，即可唤醒我为您解答.\n
     2. 发送好友验证信息“chatgpt | chat”，即可添加我为好友.\n

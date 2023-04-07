@@ -143,7 +143,7 @@ export async function onMessage(msg: any) {
 
         // 执行htlp指令
         if (privateContent.trim().toLocaleLowerCase() === "help".toLocaleLowerCase()) {
-          return await contact.say(awakenHelp(contact.name()));
+          return await contact.say(awakenHelp());
         }
 
         // 调用回复消息方法
