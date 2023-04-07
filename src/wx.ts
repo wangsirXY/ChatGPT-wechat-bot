@@ -120,7 +120,7 @@ export async function onMessage(msg: any) {
 
         // 执行htlp指令
         if (groupContent.trim().toLocaleLowerCase() === "help".toLocaleLowerCase()) {
-          return await contact.say(awakenHelp(contact.name()));
+          return await room.say(awakenHelp(contact.name()));
         }
 
         // 调用回复消息方法
